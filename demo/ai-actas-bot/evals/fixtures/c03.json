@@ -1,10 +1,10 @@
 {
   "_synthetic": true,
   "case_id": "c03",
-  "model_text": "{\n  \"summary\": \"Reunión con 1 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Decisión: versionado en la ruta y soporte mínimo de 12 meses por versión\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de escribir la guía de versionado como decisión de arquitectura\",\n      \"owner\": \"Elena Prat\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Pendiente: avisar a los clientes actuales antes de publicar el contrato\",\n      \"owner\": \"Nerea Cobo\",\n      \"due\": null\n    }\n  ]\n}",
+  "model_text": "{\n  \"summary\": \"Reunión con 1 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Decisión: versionado en la ruta y soporte mínimo de 12 meses por versión\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de escribir la guía de versionado como decisión de arquitectura\",\n      \"owner\": \"Carlos Mendoza\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Pendiente: avisar a los clientes actuales antes de publicar el contrato\",\n      \"owner\": \"Nerea Cobo\",\n      \"due\": null\n    }\n  ]\n}",
   "usage": {
     "input_tokens": 136,
-    "output_tokens": 139
+    "output_tokens": 140
   },
   "latency_ms": 0
 }
