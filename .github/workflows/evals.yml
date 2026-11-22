@@ -12,6 +12,11 @@ on:
       - "demo/ai-actas-bot/agent/**"
       - "demo/ai-actas-bot/evals/**"
   workflow_dispatch:
+    inputs:
+      live:
+        description: "Run against the real deployment (requires Azure OIDC configured)"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -36,10 +41,11 @@ jobs:
         run: make demo
 
   # Same gate, real deployment, no fixtures. Manual on purpose: it costs money and it is
-  # slow, so it does not belong on every pull request.
+  # slow, so it does not belong on every pull request. It also needs Azure OIDC configured,
+  # so it must not run on a plain dispatch: that would fail for reasons unrelated to the code.
   gate-live:
     name: evaluation gate (live)
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.live
     runs-on: ubuntu-latest
     timeout-minutes: 20
     environment: foundry
