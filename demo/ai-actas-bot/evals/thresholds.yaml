@@ -1,0 +1,8 @@
+# The gate. This file is the required check.
+# A metric is either above its floor or below it. There is no "review later".
+dataset: dataset.jsonl
+evaluators:
+  schema_valid:     { min: 1.00 }
+  decisions_recall: { min: 0.80 }
+  owner_accuracy:   { min: 0.75 }
+  invented_owners:  { max: 0 }

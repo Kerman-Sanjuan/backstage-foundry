@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c16",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Decisión: migrar la integración de facturación a cola con reintentos y confirmación\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Se acuerda que tres reintentos con espera creciente y cola de descartes con alerta\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"implementar la cola de facturación\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Tarea: adaptar el cliente al modelo de consulta de estado\",\n      \"owner\": \"Javier Soler\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 152,
+    "output_tokens": 169
+  },
+  "latency_ms": 0
+}

@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c05",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba apagar el entorno de demo y levantarlo solo para demos con un script\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Tarea: escribir el script de arranque del entorno de demo\",\n      \"owner\": \"Lucía Ferrer\",\n      \"due\": null\n    },\n    {\n      \"task\": \"configurar el apagado automático del entorno de pruebas\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 158,
+    "output_tokens": 134
+  },
+  "latency_ms": 0
+}

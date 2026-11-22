@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c18",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba un único repositorio de decisiones de arquitectura y archivar el resto en modo lectura\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Se aprueba usar una plantilla común de decisión\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de proponer la plantilla de decisión\",\n      \"owner\": \"Andrés Villar\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Tarea: migrar las cinco decisiones más recientes al formato nuevo\",\n      \"owner\": \"Elena Prat\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 133,
+    "output_tokens": 169
+  },
+  "latency_ms": 0
+}

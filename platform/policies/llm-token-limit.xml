@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The policy that turns a shared model deployment into something a team can be billed for.
+
+  Placed at the API scope of the model API in the gateway. The counter-key is what makes
+  attribution possible: one counter per subscription (one per team/app), not one per
+  gateway.
+
+  What this policy answers: "how much may this team spend per minute, and what do we tell
+  them when they hit it".
+  What it does NOT answer: "why did this answer come out wrong". That is a trace, and it
+  lives in the Foundry project, not here.
+-->
+<policies>
+  <inbound>
+    <base />
+
+    <!-- Tokens, not requests. A 200-token answer and a 30 000-token summary are one
+         request each; any limit expressed in requests is a limit on nothing. -->
+    <llm-token-limit
+      counter-key="@(context.Subscription.Id)"
+      tokens-per-minute="20000"
+      estimate-prompt-tokens="true"
+      tokens-consumed-header-name="x-tokens-consumed"
+      remaining-tokens-header-name="x-remaining-tokens"
+      retry-after-header-name="Retry-After" />
+
+    <!-- The caller identity reaches the backend as a header so that traces in App
+         Insights can be joined to the cost report by team. Without this, the two
+         dashboards never reconcile and nobody trusts either. -->
+    <set-header name="x-attribution-team" exists-action="override">
+      <value>@(context.Subscription.Name)</value>
+    </set-header>
+
+    <set-header name="x-attribution-request" exists-action="override">
+      <value>@(context.RequestId.ToString())</value>
+    </set-header>
+
+    <!-- The backend is reached with the gateway's managed identity, never with the
+         caller's credentials. Separating the two is the reason a team can be given a
+         project without being given the keys to the resource. -->
+    <authentication-managed-identity resource="https://cognitiveservices.azure.com" />
+  </inbound>
+
+  <backend>
+    <base />
+  </backend>
+
+  <outbound>
+    <base />
+  </outbound>
+
+  <on-error>
+    <base />
+  </on-error>
+</policies>

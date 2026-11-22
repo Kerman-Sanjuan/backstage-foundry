@@ -1,0 +1,4 @@
+# Replay mode needs only pyyaml. Live mode and recording need the rest.
+pyyaml>=6.0
+openai>=1.40
+azure-identity>=1.17

@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c14",
+  "model_text": "{\n  \"summary\": \"Reunión con 1 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [],\n  \"action_items\": [\n    {\n      \"task\": \"configurar la purga de caché en el pipeline\",\n      \"owner\": \"Javier Soler\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Pendiente: medir el ahorro de ancho de banda durante dos semanas\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 133,
+    "output_tokens": 94
+  },
+  "latency_ms": 0
+}

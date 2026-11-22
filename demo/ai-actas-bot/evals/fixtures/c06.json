@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c06",
+  "model_text": "{\n  \"summary\": \"Reunión con 1 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba avanzar con el otro candidato y dejar a este en reserva\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"escribir el correo de respuesta al candidato\",\n      \"owner\": \"Nerea Cobo\",\n      \"due\": null\n    },\n    {\n      \"task\": \"actualizar la ficha en el sistema de selección\",\n      \"owner\": \"Marta Ruiz\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 129,
+    "output_tokens": 124
+  },
+  "latency_ms": 0
+}

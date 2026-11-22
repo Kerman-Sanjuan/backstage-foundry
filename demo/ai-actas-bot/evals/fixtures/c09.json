@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c09",
+  "model_text": "{\n  \"summary\": \"Reunión con 1 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Queda decidido: elegir el proveedor con trazas y precio fijo, asumiendo soporte solo en inglés\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de negociar el contrato y pedir una prueba de tres meses\",\n      \"owner\": \"Elena Prat\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Se encarga de hacer la prueba de integración con dos servicios\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 147,
+    "output_tokens": 142
+  },
+  "latency_ms": 0
+}

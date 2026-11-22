@@ -1,0 +1,34 @@
+NOTICE
+======
+
+Azure AI Foundry + Backstage — reference architecture and demo
+Copyright 2026 Kerman Sanjuan
+
+This repository is conference material. It is written to be read and run, not deployed.
+It is not production software and carries no support.
+
+Third-party names
+-----------------
+Azure, Microsoft Foundry, Backstage, GitHub and Azure API Management are trademarks of
+their respective owners. This repository is not affiliated with or endorsed by any of them.
+
+Data
+----
+Every transcript in demo/ai-actas-bot/evals/dataset.jsonl is synthetic. The people, teams,
+dates and decisions in them are invented. No customer data and no internal figures from any
+employer appear in this repository, by design: the talk is about architecture, not about a
+client.
+
+Fixtures
+--------
+demo/ai-actas-bot/evals/fixtures/ contains model responses used by the replay mode of the
+evaluator. They were produced synthetically (this repository was written without an Azure
+subscription) and are marked as such in each file. Run `make record` against a real
+deployment to replace them with genuine model output. The evaluator code paths for live and
+replay mode are identical; only the transport changes.
+
+Credentials
+-----------
+No subscription ids, endpoints, keys or tokens are committed. `.env.example` contains
+placeholders only. The CI workflow authenticates to Azure through GitHub OIDC — there is no
+stored secret in this design, which is the point of the design.

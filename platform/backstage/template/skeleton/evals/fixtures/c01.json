@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c01",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 3 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba bajar el pool de conexiones a 20 y añadir una alerta al 80% de uso\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Se acuerda que revertir el cambio de ORM y no reintentarlo este trimestre\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de configurar la alerta al 80% de uso del pool\",\n      \"owner\": \"Sergio Nogueira\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Se encarga de escribir el postmortem en el repositorio de incidentes\",\n      \"owner\": \"Elena Prat\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Pendiente: añadir el test de carga al pipeline\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 167,
+    "output_tokens": 206
+  },
+  "latency_ms": 0
+}

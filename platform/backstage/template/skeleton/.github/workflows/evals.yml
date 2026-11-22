@@ -1,0 +1,29 @@
+name: evals
+
+# The required check. Its job name must match `requiredStatusCheckContexts` in the
+# platform template, otherwise the branch protection protects nothing.
+
+on:
+  pull_request:
+    paths:
+      - "agent/**"
+      - "evals/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # federated credentials to Azure: no stored secret
+
+jobs:
+  gate:
+    name: evaluation gate (replay)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r evals/requirements.txt
+      - name: Gate
+        run: python -m evals.run

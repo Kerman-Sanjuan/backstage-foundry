@@ -1,0 +1,38 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name }}
+  description: AI agent generated from the platform golden path
+  annotations:
+    github.com/project-slug: acme/${{ values.name }}
+  tags:
+    - ai
+    - ai-agent
+  links:
+    - title: Evaluation thresholds
+      url: https://github.com/acme/${{ values.name }}/blob/main/evals/thresholds.yaml
+spec:
+  type: ai-agent
+  lifecycle: experimental
+  owner: ${{ values.owner }}
+  system: ai-platform
+  # The catalog answers the only question that matters at scale: who do I call,
+  # and what does this thing depend on. Both come from this file, not from a dashboard.
+  dependsOn:
+    - resource:ai-platform/${{ values.model }}
+
+---
+# One resource per approved model, owned by the platform team. Teams depend on it; they
+# do not own it. This is how "which applications use this model" gets an answer without
+# asking anybody.
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{ values.model }}
+  description: Approved model deployment, quota enforced by the gateway
+  tags:
+    - ai-model
+spec:
+  type: ai-model
+  owner: platform-team
+  system: ai-platform

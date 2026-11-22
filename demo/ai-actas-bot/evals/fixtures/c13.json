@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c13",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 3 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba el equipo de logística accede a desarrollo y pruebas, y a producción tras la formación\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Se acuerda que crear un checklist de onboarding en el portal interno\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de preparar la sesión de catálogo y despliegue\",\n      \"owner\": \"Nerea Cobo\",\n      \"due\": null\n    },\n    {\n      \"task\": \"preparar la sesión de observabilidad y alertas\",\n      \"owner\": \"Sergio Nogueira\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Tarea: escribir el checklist de onboarding en el portal interno\",\n      \"owner\": \"Lucía Ferrer\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 137,
+    "output_tokens": 208
+  },
+  "latency_ms": 0
+}

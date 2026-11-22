@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c15",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 1 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Decisión: reducir a cuatro plazas por curso y priorizar certificaciones sobre cursos genéricos\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Decisión: las dos primeras plazas van a datos y seguridad\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Tarea: preparar el calendario y el presupuesto revisado de formación\",\n      \"owner\": \"Elena Prat\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 130,
+    "output_tokens": 139
+  },
+  "latency_ms": 0
+}

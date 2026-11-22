@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c10",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 3 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se acuerda que no publicar hasta arreglar los dos fallos críticos de accesibilidad\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Queda decidido: añadir un test automático de accesibilidad al pipeline\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Pendiente: arreglar el foco y el orden de tabulación del botón de pago\",\n      \"owner\": \"Javier Soler\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Pendiente: revisar el mensaje de error con lector de pantalla\",\n      \"owner\": \"Nerea Cobo\",\n      \"due\": null\n    },\n    {\n      \"task\": \"añadir el test automático de accesibilidad al pipeline\",\n      \"owner\": \"Elena Prat\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 149,
+    "output_tokens": 208
+  },
+  "latency_ms": 0
+}

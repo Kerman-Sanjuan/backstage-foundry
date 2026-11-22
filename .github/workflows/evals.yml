@@ -1,0 +1,67 @@
+name: evals
+
+# This is the required check. Everything else in the workflow exists to keep it cheap.
+#
+# Running the gate on every push would be waste: the only commits that can change model
+# behaviour are the ones that touch the prompt, the dataset, the thresholds or the code
+# that reads them.
+
+on:
+  pull_request:
+    paths:
+      - "demo/ai-actas-bot/agent/**"
+      - "demo/ai-actas-bot/evals/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # federated credentials to Azure. There is no stored secret in this design.
+
+jobs:
+  gate:
+    name: evaluation gate (replay)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r demo/ai-actas-bot/requirements.txt
+
+      - name: Gate
+        run: make demo
+
+  # Same gate, real deployment, no fixtures. Manual on purpose: it costs money and it is
+  # slow, so it does not belong on every pull request.
+  gate-live:
+    name: evaluation gate (live)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment: foundry
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install -r demo/ai-actas-bot/requirements.txt
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Gate against the deployment
+        env:
+          FOUNDRY_ENDPOINT: ${{ vars.FOUNDRY_ENDPOINT }}
+          FOUNDRY_DEPLOYMENT: ${{ vars.FOUNDRY_DEPLOYMENT }}
+          LIVE: "1"
+        run: make demo LIVE=1

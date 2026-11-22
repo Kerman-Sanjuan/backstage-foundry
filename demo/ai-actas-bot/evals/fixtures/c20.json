@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c20",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba hacer la prueba de carga el día 20 con el doble del tráfico del año pasado\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Se acuerda que si la prueba falla se congelan los cambios y solo se arregla lo que salga\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de avisar a los equipos de que no desplieguen el día de la prueba\",\n      \"owner\": \"Sergio Nogueira\",\n      \"due\": null\n    },\n    {\n      \"task\": \"preparar el entorno de prueba aislado\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 133,
+    "output_tokens": 178
+  },
+  "latency_ms": 0
+}

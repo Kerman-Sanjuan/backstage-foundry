@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c17",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Queda decidido: tratar la caducidad de sesión al cambiar de pestaña como incidente de prioridad alta\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Queda decidido: crear una alerta cuando un mismo ticket se repita más de diez veces\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Pendiente: investigar la cookie de sesión\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Tarea: definir la alerta de tickets repetidos con soporte\",\n      \"owner\": \"Nerea Cobo\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 118,
+    "output_tokens": 175
+  },
+  "latency_ms": 0
+}

@@ -1,0 +1,121 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: ai-agent
+  title: AI agent from the golden path
+  description: |
+    Creates a repository with an agent, an evaluation dataset, a required check and the
+    infrastructure to run it against an approved model. You choose the workload; the
+    platform already chose the rails.
+  tags:
+    - ai
+    - recommended
+spec:
+  owner: platform-team
+  type: ai-agent
+
+  # Five fields. Every field that is missing here becomes a decision someone makes
+  # in main at 6pm on a Friday.
+  parameters:
+    - title: The workload
+      required: [name, owner]
+      properties:
+        name:
+          title: Name
+          type: string
+          description: "Lowercase, no spaces. It joins the catalog to the cost report."
+          pattern: '^[a-z][a-z0-9-]{2,30}$'
+          ui:autofocus: true
+        owner:
+          title: Owning team
+          type: string
+          ui:field: OwnerPicker
+          ui:options:
+            catalogFilter:
+              kind: Group
+
+    - title: The model
+      required: [model, tpm]
+      properties:
+        model:
+          title: Approved model
+          type: string
+          description: "From the platform catalog. Not free-hand: this decides cost and compliance."
+          enum:
+            - gpt-4o-mini
+            - gpt-4o
+            - o4-mini
+          enumNames:
+            - GPT-4o mini (cheap, default)
+            - GPT-4o (general purpose)
+            - o4-mini (reasoning)
+        tpm:
+          title: Tokens per minute
+          type: integer
+          description: "Allocated now, not negotiated after the first invoice."
+          default: 20000
+          minimum: 5000
+          maximum: 200000
+
+    - title: Data
+      required: [personal_data]
+      properties:
+        personal_data:
+          title: Will this process personal data?
+          type: boolean
+          default: false
+          description: |
+            Not a record of a fact. It changes what gets generated: retention policy,
+            redaction step and a stricter log retention.
+
+  steps:
+    - id: fetch
+      name: Fetch the golden path
+      action: fetch:template
+      input:
+        url: ./skeleton
+        values:
+          name: ${{ parameters.name }}
+          owner: ${{ parameters.owner }}
+          model: ${{ parameters.model }}
+          tpm: ${{ parameters.tpm }}
+          personal_data: ${{ parameters.personal_data }}
+
+    # No official Foundry scaffolder action exists. This one is the platform team's,
+    # about eighty lines of TypeScript, and it fails closed.
+    - id: project
+      name: Ensure the Foundry project and quota
+      action: foundry:ensure-project
+      input:
+        project: ${{ parameters.name }}
+        owner: ${{ parameters.owner }}
+        deployment: ${{ parameters.model }}
+        tpm: ${{ parameters.tpm }}
+
+    - id: publish
+      name: Create the repository
+      action: publish:github
+      input:
+        repoUrl: github.com?owner=acme&repo=${{ parameters.name }}
+        defaultBranch: main
+        repoVisibility: private
+        requiredApprovals: 0
+        protectDefaultBranch: true
+        # Branch protection is not decoration: it is what makes the gate binding.
+        requiredStatusCheckContexts:
+          - evaluation gate (replay)
+
+    - id: register
+      name: Register in the catalog
+      action: catalog:register
+      input:
+        repoContentsUrl: ${{ steps.publish.output.repoContentsUrl }}
+        catalogInfoPath: /catalog-info.yaml
+
+  output:
+    links:
+      - title: Repository
+        url: ${{ steps.publish.output.remoteUrl }}
+      - title: Catalog entry
+        icon: catalog
+        entityRef: ${{ steps.register.output.entityRef }}

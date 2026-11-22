@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c04",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba migrar solo las dos máquinas pequeñas y dejar facturación para el año que viene\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Se acuerda que usar el registro de imágenes con escaneo de vulnerabilidades\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Tarea: adaptar los tres Dockerfiles al registro nuevo\",\n      \"owner\": \"Javier Soler\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Pendiente: actualizar el diagrama de arquitectura\",\n      \"owner\": \"Marta Ruiz\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 138,
+    "output_tokens": 171
+  },
+  "latency_ms": 0
+}

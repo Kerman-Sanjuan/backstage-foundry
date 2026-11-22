@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c11",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se acuerda que arranque optimista con configuración por defecto y refresco en segundo plano\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Queda decidido: si el refresco falla se mantiene la configuración por defecto y se reintenta al volver a primer plano\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Pendiente: implementar el arranque optimista\",\n      \"owner\": \"Javier Soler\",\n      \"due\": null\n    },\n    {\n      \"task\": \"medir el tiempo de arranque en los tres dispositivos de referencia\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 149,
+    "output_tokens": 185
+  },
+  "latency_ms": 0
+}

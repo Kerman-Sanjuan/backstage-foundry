@@ -1,0 +1,10 @@
+{
+  "_synthetic": true,
+  "case_id": "c02",
+  "model_text": "{\n  \"summary\": \"Reunión con 2 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba el rediseño del panel se limita a la primera pantalla en este sprint\",\n      \"rationale\": \"Acordado en la reunión.\"\n    },\n    {\n      \"text\": \"Se acuerda que la deuda del pipeline de tests queda fuera del sprint\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Tarea: pedir las credenciales al proveedor de pagos\",\n      \"owner\": \"Marta Ruiz\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Se encarga de estimar la deuda del pipeline de tests\",\n      \"owner\": \"Javier Soler\",\n      \"due\": null\n    }\n  ]\n}",
+  "usage": {
+    "input_tokens": 137,
+    "output_tokens": 167
+  },
+  "latency_ms": 0
+}
