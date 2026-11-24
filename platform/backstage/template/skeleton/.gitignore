@@ -1,0 +1,5 @@
+# The gate creates a virtualenv and Python writes bytecode. Neither belongs in the
+# repository a team is supposed to read.
+.venv/
+__pycache__/
+*.py[cod]
