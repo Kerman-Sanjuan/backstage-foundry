@@ -108,7 +108,7 @@ spec:
         repoUrl: github.com?owner=acme&repo=${{ parameters.name }}
         defaultBranch: main
         repoVisibility: private
-        requiredApprovals: 0
+        requiredApprovingReviewCount: 0
         protectDefaultBranch: true
         # Branch protection is not decoration: it is what makes the gate binding.
         requiredStatusCheckContexts:
