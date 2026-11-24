@@ -44,8 +44,14 @@ az ad app create --display-name "$APP" --query appId -o tsv > app-id.txt
 APP_ID=$(cat app-id.txt)
 
 az ad sp create --id "$APP_ID"
-az role assignment create --assignee "$APP_ID" --role Contributor \
-  --scope "/subscriptions/$(az account show --query id -o tsv)/resourceGroups/rg-aigw-demo-*"
+SUB=$(az account show --query id -o tsv)
+
+# Contributor on the subscription, not on the demo resource group. Two reasons: the
+# identity has to be able to create the group in the first place, and an assignment
+# scoped to the group dies with it the first time `down` runs. The boundary that
+# actually matters is the federated credential (this repository, this environment)
+# plus the budget; use a dedicated subscription if that is not enough.
+az role assignment create --assignee "$APP_ID" --role Contributor --scope "/subscriptions/$SUB"
 
 # Federated credential: only this repository, only the foundry environment.
 az ad app federated-credential create --id "$APP_ID" --parameters "{
@@ -62,10 +68,9 @@ gh variable set AZURE_SUBSCRIPTION_ID --body "$(az account show --query id -o ts
 
 Two notes on that setup:
 
-- The role assignment above targets a resource-group pattern. Azure does not accept
-  wildcards in `--scope`, so assign `Contributor` on the subscription and rely on the
-  federated credential being repository-scoped, or create the demo group once by hand
-  and assign on it. Pick one and write it down.
+- The role assignment is wide on purpose, and it is the least pleasant part of this
+  folder. A scoped assignment is not an option while the lifecycle deletes the scope
+  it would be scoped to.
 - The GitHub **environment** must be called `foundry` (the workflow pins it). Create it
   under Settings > Environments if it does not exist.
 
