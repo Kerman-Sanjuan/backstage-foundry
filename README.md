@@ -3,7 +3,7 @@
 > A model catalog is not a platform. A platform is what still works when the platform team is not in the room.
 
 Reference architecture and runnable demo for the talk **"Azure AI Foundry + Backstage"**
-(NetCoreConf Barcelona, 12 December 2026).
+(Azure Cloud Lab 2026, online, Thursday 3 December 2026).
 
 This repository is not a product. It is the answer to one question:
 
