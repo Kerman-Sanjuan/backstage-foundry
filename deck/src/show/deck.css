@@ -507,7 +507,7 @@ html[data-theme='light'] {
   gap: calc(var(--su) * 2.4);
   margin-top: calc(var(--su) * 2.6);
   min-height: 0;
-  align-content: center;
+  align-content: start;
 }
 
 .panel {
