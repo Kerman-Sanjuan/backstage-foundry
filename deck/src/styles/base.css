@@ -1,0 +1,430 @@
+/*
+ * Base styles for the keynote engine. Neutral on purpose: no visual identity yet.
+ * The identity goes in src/show/deck.css when the show is designed.
+ * Stacking order lives in src/engine/layers.ts. Do not write z-index here.
+ */
+
+/* IBM Plex, self-hosted: no request to a third party, and it works offline at the venue.
+ * Both families are SIL OFL 1.1 (public/fonts/LICENSE.txt). */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-sans-var.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-400.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/ibm-plex-mono-600.woff2') format('woff2');
+}
+
+:root {
+  --bg: #282828;
+  --fg: #ebdbb2;
+  --muted: #bdae93;
+  --line: #3c3836;
+  --c-accent: #fe8019;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', Consolas, monospace;
+  /* Stage box, written by the engine on resize. */
+  --stage-x: 0px;
+  --stage-y: 0px;
+  --stage-w: 100vw;
+  --stage-h: 56.25vw;
+  --su: 1vh;
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  /* A presenter click or drag must never select text. */
+  user-select: none;
+  -webkit-user-select: none;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
+html.cursor-hidden,
+html.cursor-hidden * {
+  cursor: none !important;
+}
+
+.keynote {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  contain: strict;
+}
+
+.layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+/* A scene fills its layer. Scenes stack in DOM order inside the layer. */
+.scene {
+  position: absolute;
+  inset: 0;
+  contain: layout paint;
+}
+
+.scene-root {
+  position: absolute;
+  inset: 0;
+}
+
+.stage {
+  position: absolute;
+  left: var(--stage-x);
+  top: var(--stage-y);
+  width: var(--stage-w);
+  height: var(--stage-h);
+}
+
+.fx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.svg-fixed-stroke :is(path, line, polyline, polygon, circle, rect, ellipse) {
+  vector-effect: non-scaling-stroke;
+}
+
+/* Start screen only, top right. The engine hides it once the show moves. */
+.start-controls {
+  position: absolute;
+  display: flex;
+  pointer-events: auto;
+}
+
+.start-switch {
+  display: flex;
+}
+
+.start-switch button {
+  display: inline-flex;
+  align-items: center;
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  cursor: pointer;
+}
+
+.start-icon {
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Previous and next arrows. The engine wakes them on pointer movement. */
+.nav-arrows {
+  position: absolute;
+  display: flex;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.nav-arrows[data-awake='true'] {
+  opacity: 1;
+}
+
+.nav-arrows button {
+  display: grid;
+  place-items: center;
+  pointer-events: auto;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.nav-arrows svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Cookie consent banner, top right under the start controls, until the visitor answers it. */
+.consent-banner {
+  position: absolute;
+  top: calc(var(--su) * 9);
+  right: calc(var(--su) * 2);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: calc(var(--su) * 1);
+  width: min(86vw, 22rem);
+  padding: calc(var(--su) * 1) calc(var(--su) * 1.25);
+  border: 1px solid var(--line);
+  border-radius: 0.5rem;
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  color: var(--fg);
+  font: 400 0.8rem/1.4 var(--font-mono);
+  pointer-events: auto;
+}
+
+.consent-banner-text {
+  margin: 0;
+  text-align: left;
+}
+
+.consent-banner-actions {
+  display: flex;
+  flex: none;
+  gap: calc(var(--su) * 0.75);
+}
+
+.consent-banner-actions button {
+  font: inherit;
+  color: inherit;
+  padding: 0.35em 0.9em;
+  border: 1px solid var(--line);
+  border-radius: 0.35rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.consent-banner-actions button.consent-banner-accept {
+  border-color: var(--c-accent);
+  background: var(--c-accent);
+  color: #fff;
+}
+
+/* The light theme: gruvbox light, for bright rooms and paper handouts. */
+html[data-theme='light'] {
+  --bg: #fbf1c7;
+  --fg: #3c3836;
+  --muted: #665c54;
+  --line: #e3d7ae;
+  --c-accent: #af3a03;
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}
+
+/* ---- presenter window (P in the show, src/engine/PresenterView.tsx) ---- */
+/* A plain page for the laptop screen, not the stage: it uses the viewport, and the notes scroll. */
+.presenter {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(16rem, 30%);
+  grid-template-rows: auto minmax(0, 1fr);
+  gap: 1.5rem 2.5rem;
+  padding: 1.5rem 2rem 2rem;
+  background: var(--bg);
+  color: var(--fg);
+  font: 400 1rem/1.5 var(--font-mono);
+  user-select: text;
+  -webkit-user-select: text;
+}
+.presenter--waiting { display: flex; align-items: center; justify-content: center; }
+.presenter-bar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: baseline;
+  gap: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.1rem;
+  font-variant-numeric: tabular-nums;
+}
+.presenter-moving { color: var(--c-accent); }
+.presenter-clock { margin-left: auto; font-size: 1.6rem; font-weight: 600; }
+.presenter-now { display: flex; flex-direction: column; min-height: 0; }
+.presenter-label {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.presenter-heading {
+  margin: 0 0 1.5rem;
+  max-width: 40ch;
+  font: 800 clamp(1.6rem, 3.2vw, 2.6rem) / 1.1 "IBM Plex Sans", var(--font-sans);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.presenter-notes {
+  flex: 1;
+  min-height: 0;
+  margin: 0;
+  padding-right: 1rem;
+  overflow-y: auto;
+  max-width: 72ch;
+  font-size: clamp(1rem, 1.35vw, 1.2rem);
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+ul.presenter-notes { padding-left: 1.4em; font-size: clamp(1.15rem, 1.8vw, 1.5rem); line-height: 1.4; }
+ul.presenter-notes li { margin-bottom: 0.8em; }
+ul.presenter-notes li::marker { color: var(--c-accent); }
+.presenter-side { display: flex; flex-direction: column; gap: 0.4rem; padding-left: 2rem; border-left: 1px solid var(--line); }
+.presenter-next { margin: 0 0 1.5rem; font: 700 1.3rem / 1.2 "IBM Plex Sans", var(--font-sans); color: var(--muted); text-wrap: balance; }
+.presenter-buttons { display: flex; gap: 0.75rem; margin-top: auto; }
+.presenter-buttons button {
+  flex: 1;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fg);
+  font: 600 1rem/1 var(--font-mono);
+  cursor: pointer;
+}
+.presenter-buttons button:hover { border-color: var(--fg); }
+.presenter-buttons button:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 2px; }
+.presenter-buttons .presenter-primary { border-color: var(--c-accent); background: var(--c-accent); color: #f2f4ff; }
+.presenter-hint { margin: 0.75rem 0 0; font-size: 0.75rem; color: var(--muted); }
+@media (max-width: 760px) {
+  .presenter { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr) auto; }
+  .presenter-side { padding-left: 0; border-left: 0; }
+}
+
+/* ---- debug layer (development only) ---------------------------------- */
+
+.i18n-overflow {
+  outline: 2px dashed #e0a040;
+  outline-offset: 2px;
+}
+
+.debug {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 320px;
+  max-height: calc(100% - 24px);
+  overflow: auto;
+  padding: 10px 12px;
+  background: rgb(20 20 22 / 0.92);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: 11px/1.45 var(--font-mono);
+  color: var(--fg);
+  pointer-events: auto;
+  user-select: text;
+}
+
+.debug button,
+.debug select {
+  font: inherit;
+  color: inherit;
+  background: #1d1d20;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 2px 6px;
+  cursor: pointer;
+}
+
+.debug button[aria-current='true'] {
+  border-color: var(--fg);
+}
+
+.debug-head {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.debug-head button {
+  margin-left: auto;
+}
+
+.debug-grid {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 1px 8px;
+  margin: 0 0 8px;
+}
+
+.debug-grid dt {
+  color: var(--muted);
+}
+
+.debug-grid dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.debug-muted {
+  color: var(--muted);
+}
+
+.debug-warn {
+  color: #e0a040;
+}
+
+.debug-scrub {
+  width: 100%;
+  margin: 0 0 8px;
+}
+
+.debug-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+
+.debug-scenes,
+.debug-scenes ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.debug-scenes ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 2px 0 6px;
+}

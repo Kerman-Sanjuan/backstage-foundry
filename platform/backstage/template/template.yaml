@@ -82,7 +82,7 @@ spec:
           personal_data: ${{ parameters.personal_data }}
 
     # No official Foundry scaffolder action exists. This one is the platform team's,
-    # about eighty lines of TypeScript, and it fails closed.
+    # 121 lines of TypeScript, and it fails closed.
     - id: project
       name: Ensure the Foundry project and quota
       action: foundry:ensure-project
@@ -91,6 +91,15 @@ spec:
         owner: ${{ parameters.owner }}
         deployment: ${{ parameters.model }}
         tpm: ${{ parameters.tpm }}
+
+    # The team's counter in the AI gateway: one subscription, scoped to the model API.
+    # Tokens are counted per subscription, so this is what makes attribution possible.
+    - id: gateway
+      name: Give the team a place in the AI gateway
+      action: apim:ensure-subscription
+      input:
+        project: ${{ parameters.name }}
+        owner: ${{ parameters.owner }}
 
     - id: publish
       name: Create the repository

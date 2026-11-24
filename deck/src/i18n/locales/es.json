@@ -1,0 +1,23 @@
+{
+  "show.controls.language": "Idioma",
+  "show.controls.theme": "Tema",
+  "show.theme.dark": "Oscuro",
+  "show.theme.light": "Claro",
+  "show.controls.mode": "Modo",
+  "show.mode.live": "Vivo",
+  "show.mode.calm": "Calma",
+  "presenter.title": "Presentador",
+  "presenter.stop": "Parada {n} de {total}",
+  "presenter.moving": "moviendo",
+  "presenter.now": "Ahora",
+  "presenter.next": "Siguiente",
+  "presenter.notes": "Notas",
+  "presenter.empty": "Sin notas en esta parada.",
+  "presenter.end": "Fin de la charla.",
+  "presenter.waiting": "Esperando a la ventana de la charla.",
+  "presenter.back": "Atrás",
+  "presenter.forward": "Siguiente",
+  "presenter.keys": "Flechas mueven la charla. Shift salta de capítulo.",
+  "show.nav.prev": "Anterior",
+  "show.nav.next": "Siguiente"
+}
