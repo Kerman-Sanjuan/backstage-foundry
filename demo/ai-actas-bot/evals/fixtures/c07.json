@@ -1,7 +1,7 @@
 {
   "_synthetic": true,
   "case_id": "c07",
-  "model_text": "{\n  \"summary\": \"Reunión con 1 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba escaneo de secretos obligatorio en todos los repositorios, empezando por producción\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de montar el escaneo de secretos en el pipeline\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Tarea: revisar el histórico de los repositorios de producción\",\n      \"owner\": \"Sergio Nogueira\",\n      \"due\": null\n    }\n  ]\n}",
+  "model_text": "{\n  \"summary\": \"Reunión con 1 decisiones y 2 tareas asignadas.\",\n  \"decisions\": [\n    {\n      \"text\": \"Se aprueba escaneo de secretos obligatorio en todos los repositorios, empezando por producción\",\n      \"rationale\": \"Acordado en la reunión.\"\n    }\n  ],\n  \"action_items\": [\n    {\n      \"task\": \"Se encarga de montar el escaneo de secretos en el pipeline\",\n      \"owner\": \"Diego Antúnez\",\n      \"due\": null\n    },\n    {\n      \"task\": \"Tarea: revisar el histórico de los repositorios de producción\",\n      \"owner\": \"Patricia Gil\",\n      \"due\": null\n    }\n  ]\n}",
   "usage": {
     "input_tokens": 154,
     "output_tokens": 140
