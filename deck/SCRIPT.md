@@ -156,8 +156,31 @@ Plannotator se cerró sin feedback, así que se aplicaron las opciones recomenda
 - Las flechas ya no comparten tramos de cable: cada línea tiene su punto de enganche y su canal, ordenados para que no se crucen.
 - Diapositiva de índice (03) con las siete secciones, y separadores de sección para cada una: El problema, El mapa, Backstage, AI Gateway, Foundry, Demos y Día dos. Total: 35 diapositivas.
 
+## Ronda 7 (posicionamiento para el 3 de diciembre)
+
+El evento es Azure Cloud Lab, online, del 30 de noviembre al 4 de diciembre. La sesion es el jueves 3 a las 19:00 CET, 60 minutos. En la misma franja horaria hay dos sesiones que cubren el gateway por dentro: a las 18:00 "From API Platform to AI Gateway, Deep Dive" y el lunes 30 "Quien controla a tus agentes? Hosted Agents y AI Gateway en Foundry".
+
+Por eso la charla se posiciona como industrializacion, no como otra sesion de gateway:
+
+- Nueva diapositiva `example` (split, despues de `about`): "Un ejemplo no es una plataforma". Izquierda, lo que la sala ya ha visto hoy; derecha, lo que necesitan treinta equipos. Cierre en el pie: la diferencia entre una demo y una plataforma es lo que pasa la segunda vez.
+- `agenda`: las tres partes con demo van marcadas en vivo (Backstage, AI Gateway, Demos) y el texto del gateway dice "hoy ya lo has visto: aqui, quien paga y cuanto".
+- `three-pieces`: pasa a "Dos vienen hechas. Una la montas tu". Backstage es trabajo propio; gateway y Foundry son servicios que se configuran.
+- `gateway-section` y `gateway-map`: se dice en voz alta que no es el deep dive de las 18:00, y se limita a 90 segundos.
+- `gateway-policy`: se aclara en las notas que el XML es API Management y que Azure AI Gateway (GA desde el 17 de noviembre) usa politicas JSON. Pendiente decidir cual se usa en la demo.
+- `demo-2` pasa de 5 paradas a 3 y cambia de titulo: "el contador que dejo el formulario". Ya no se demuestra el bypass ni se explica el gateway: se enseña que el formulario dejo al equipo su contador y su nombre en la telemetria.
+- Portada: se corrigen los husos. PE 11:00 - 15:00, AR 13:00 - 17:00, CL 13:00 - 17:00, que es lo que publica la web del evento. La sesion son las 12:00 en Ciudad de Mexico, 13:00 en Lima y 15:00 en Buenos Aires y Santiago.
+- `gate-fail`: salida literal. Se anade el tercer owner inventado (c17) y el GATE se parte en dos lineas, como lo imprime el programa.
+- `limits`: el comando de la diapositiva no hacia nada, porque en los fixtures el campo esta escapado. El que funciona lleva comillas escapadas y hace 40 sustituciones.
+- `split` gana un `caption` opcional y se alinea arriba, no centrado: la diapositiva nueva tiene pie y las tarjetas quedan bajo el titular.
+
 ## Pendiente
 
-- Confirmar qué hay desplegado en Azure Cloud Lab (demos 1 y 2).
+- Decidir gateway para la demo: Azure AI Gateway (recurso propio, JSON, 10.000 peticiones gratis al mes hasta el 1 de enero de 2027) o API Management (XML, suscripciones). Cambia la accion de la plantilla, la diapositiva de politica y dos diagramas.
+- Confirmar suscripcion de Azure con permiso para crear Foundry y gateway. Sin ella, las demos 1 y 2 son grabacion.
+- Registrar las acciones de la plantilla en el backend de Backstage y darle identidad a Azure (1 o 2 dias de trabajo).
+- Confirmar que hay un Backstage desplegado para la charla (backstage.k3rman.com no sirve la plantilla con las acciones).
+- Grabar un video de respaldo de 40 a 60 segundos por demo: la sesion es online.
+- Revisar el catalogo real de modelos antes de la charla: la lista de la plantilla es de hace meses.
+
 - Contrastar con tu experiencia los pasos del carril "antes" de la diapositiva 02.
 - Confirmar la URL del repositorio en el cierre.

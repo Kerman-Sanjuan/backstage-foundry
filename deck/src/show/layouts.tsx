@@ -347,6 +347,7 @@ export function SplitLayout({ slide, meta }: { slide: SplitSlide; meta: SlideMet
           </section>
         ))}
       </div>
+      {slide.caption ? <p className="diagram-caption rv">{t(slide.caption)}</p> : null}
     </Frame>
   )
 }

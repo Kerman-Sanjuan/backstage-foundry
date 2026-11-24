@@ -87,7 +87,7 @@ export type Slide =
   | (SlideBase & { layout: 'stats'; title: Bi; lead?: Bi; stats: Stat[] })
   | (SlideBase & { layout: 'quote'; text: Bi; author: Bi; role?: Bi })
   | (SlideBase & { layout: 'code'; title: Bi; lead?: Bi; code: { title: Bi; lines: string[]; highlight?: number[] } })
-  | (SlideBase & { layout: 'split'; title: Bi; lead?: Bi; left: Column; right: Column })
+  | (SlideBase & { layout: 'split'; title: Bi; lead?: Bi; left: Column; right: Column; caption?: Bi })
   | (SlideBase & { layout: 'steps'; title: Bi; lead?: Bi; steps: Step[] })
   | (SlideBase & { layout: 'closing'; title: Bi; lead?: Bi; links: Link[]; byline?: Bi; role?: Bi })
   | (SlideBase & { layout: 'diagram'; title: Bi; lead?: Bi; nodes: DiagramNode[]; edges?: DiagramEdge[]; caption?: Bi })
@@ -227,14 +227,14 @@ export const talk: Talk = {
           zones: [
             { flag: 'es', time: '17:00 - 21:00 CET' },
             { flag: 'mx', time: '10:00 - 14:00 CST' },
-            { flag: 'pe', time: '10:00 - 14:00 PET' },
-            { flag: 'ar', time: '12:00 - 16:00 ART' },
-            { flag: 'cl', time: '12:00 - 16:00 CLST' },
+            { flag: 'pe', time: '11:00 - 15:00 PET' },
+            { flag: 'ar', time: '13:00 - 17:00 ART' },
+            { flag: 'cl', time: '13:00 - 17:00 CLST' },
           ],
           site: 'www.azurecloudlab.net',
           note: bi(
-            'Who I am in ten seconds. Thank the organisers: Azure Cloud Lab and Sevilla DotNet.\nThere are few slides today: three demos in Azure and one repository.\nThe talk is at 19:00 on 3 December. The time zone strip is the window of the whole event day, as on the event banner: check the local time of your session before you say it aloud.',
-            'Quién soy en diez segundos. Da las gracias a la organización: Azure Cloud Lab y Sevilla DotNet.\nHoy hay pocas diapositivas: tres demos en Azure y un repositorio.\nLa charla es el 3 de diciembre a las 19:00. La franja de husos horarios es la ventana de todo el día del evento, como en el banner: comprueba la hora local de tu sesión antes de decirla en voz alta.',
+            'Who I am in ten seconds. Thank the organisers: Azure Cloud Lab and Sevilla DotNet.\nThere are few slides today: three demos in Azure and one repository.\nThe talk is at 19:00 on 3 December. The time zone strip is the window of the whole event day, as on the event banner: check the local time of your session before you say it aloud.\nYour session: 12:00 in Mexico City, 13:00 in Lima, 15:00 in Buenos Aires and Santiago.',
+            'Quién soy en diez segundos. Da las gracias a la organización: Azure Cloud Lab y Sevilla DotNet.\nHoy hay pocas diapositivas: tres demos en Azure y un repositorio.\nLa charla es el 3 de diciembre a las 19:00. La franja de husos horarios es la ventana de todo el día del evento, como en el banner: comprueba la hora local de tu sesión antes de decirla en voz alta.\nTu sesión: 12:00 en Ciudad de México, 13:00 en Lima, 15:00 en Buenos Aires y Santiago.',
           ),
         },
         {
@@ -259,21 +259,54 @@ export const talk: Talk = {
           ),
         },
         {
+          id: 'example',
+          layout: 'split',
+          title: bi('An example is not a platform', 'Un ejemplo no es una plataforma'),
+          lead: bi(
+            'The gateway and the agent have already been on stage today. This hour is about the second time someone asks for them.',
+            'El gateway y el agente ya han estado hoy en el escenario. Esta hora va de la segunda vez que alguien los pide.',
+          ),
+          left: {
+            title: bi('What you have seen', 'Lo que ya has visto'),
+            items: [
+              bi('A gateway that counts tokens per caller', 'Un gateway que cuenta tokens por llamante'),
+              bi('An agent that calls a model', 'Un agente que llama a un modelo'),
+              bi('A demo that works in one subscription', 'Una demo que funciona en una suscripción'),
+            ],
+          },
+          right: {
+            title: bi('What thirty teams need', 'Lo que necesitan treinta equipos'),
+            items: [
+              bi('Someone who answers for it', 'Alguien que responda por ello'),
+              bi('A counter per team, before the invoice', 'Un contador por equipo, antes de la factura'),
+              bi('Something that stops the bad copy', 'Algo que frene la copia mala'),
+            ],
+          },
+          caption: bi(
+            'The difference between a demo and a platform is what happens the second time.',
+            'La diferencia entre una demo y una plataforma es lo que pasa la segunda vez.',
+          ),
+          note: bi(
+            'Name the other sessions and be generous: the 18:00 one, From API Platform to AI Gateway, and the 17:00 one on Entra Agent ID.\nThis slide is what buys the hour: I am not going to repeat their deep dive, I am going to industrialise what they showed.\nThe line: an example scales by copy and paste, and copy and paste is how you end up with ten versions of the same rule.',
+            'Nombra las otras sesiones y sé generoso: la de las 18:00, From API Platform to AI Gateway, y la de las 17:00 sobre Entra Agent ID.\nEsta diapositiva es lo que compra la hora: no voy a repetir su deep dive, voy a industrializar lo que enseñaron.\nLa frase: un ejemplo escala a base de copiar y pegar, y copiar y pegar es como acabas con diez versiones de la misma regla.',
+          ),
+        },
+        {
           id: 'agenda',
           layout: 'agenda',
           title: bi('What we will see', 'Lo que vamos a ver'),
           items: [
             { title: bi('The problem', 'El problema'), text: bi('A team asks for AI, with and without a platform.', 'Un equipo pide IA, con y sin plataforma.') },
             { title: bi('The map', 'El mapa'), text: bi('Three pieces, two flows, one form.', 'Tres piezas, dos flujos, un formulario.') },
-            { title: bi('Backstage', 'Backstage'), text: bi('Where the team asks and who owns what.', 'Donde se pide y quién es dueño de qué.') },
-            { title: bi('AI Gateway', 'AI Gateway'), text: bi('Who is calling, and how much it spends.', 'Quién llama y cuánto gasta.') },
-            { title: bi('Foundry', 'Foundry'), text: bi('Resource, projects, models and traces.', 'Recurso, proyectos, modelos y trazas.') },
-            { title: bi('Demos', 'Demos'), text: bi('The form, the gateway and the gate, in Azure.', 'El formulario, el gateway y el gate, en Azure.'), live: true },
+            { title: bi('Backstage', 'Backstage'), text: bi('Where the team asks, and the catalog remembers.', 'Donde el equipo pide, y el catálogo recuerda.'), live: true },
+            { title: bi('AI Gateway', 'AI Gateway'), text: bi('You have seen it today. Here: who pays, and how much.', 'Hoy ya lo has visto. Aquí: quién paga y cuánto.'), live: true },
+            { title: bi('Foundry', 'Foundry'), text: bi('The resource governs, the projects develop.', 'El recurso gobierna, los proyectos desarrollan.') },
+            { title: bi('Demos', 'Demos'), text: bi('The gate that blocks the merge, in the browser.', 'El gate que bloquea el merge, en el navegador.'), live: true },
             { title: bi('Day two', 'Día dos'), text: bi('Lineage, updates and limits.', 'Linaje, actualizaciones y límites.') },
           ],
           note: bi(
-            'Thirty seconds. Name the seven parts and say where the demos are: they are the middle of the talk, not the end.\nTell them the deck is public and the repository too.',
-            'Treinta segundos. Nombra las siete partes y di dónde están las demos: son el centro de la charla, no el final.\nDi que la presentación es pública, y el repositorio también.',
+            'Thirty seconds. Say which three parts are live, because that is the promise of the hour: three demos, no slides in between.\nTell them the deck is public and the repository too.\nAnd say out loud that the gateway was covered at 18:00: it sets the expectation that you will not repeat it.',
+            'Treinta segundos. Di cuáles de las siete partes son en vivo, porque esa es la promesa de la hora: tres demos, sin diapositivas en medio.\nDi que la presentación es pública, y el repositorio también.\nY di en voz alta que el gateway se cubrió a las 18:00: eso fija la expectativa de que no lo vas a repetir.',
           ),
         },
       ],
@@ -376,27 +409,28 @@ export const talk: Talk = {
         {
           id: 'three-pieces',
           layout: 'points',
-          title: bi('Three pieces, one path', 'Tres piezas, un camino'),
+          title: bi('Two come as products. One is yours.', 'Dos vienen hechas. Una la montas tú.'),
+          lead: bi('Backstage is the part you have to build, because nobody sells you your own rules.', 'Backstage es la parte que tienes que construir, porque tus reglas no te las vende nadie.'),
           items: [
             {
               title: bi('Backstage asks', 'Backstage pide'),
               icon: 'backstage',
-              text: bi('The form, the catalog and who owns what.', 'El formulario, el catálogo y quién es dueño de qué.'),
+              text: bi('The form, the catalog and who answers for what. This is your work.', 'El formulario, el catálogo y quién responde por qué. Esto es trabajo tuyo.'),
             },
             {
               title: bi('The gateway measures', 'El gateway mide'),
               icon: 'apim',
-              text: bi('Every request passes through it, with a team.', 'Cada petición pasa por él, con un equipo.'),
+              text: bi('A managed service you configure, not software you operate.', 'Un servicio gestionado que configuras, no software que operas.'),
             },
             {
               title: bi('Foundry runs', 'Foundry ejecuta'),
               icon: 'ai-foundry',
-              text: bi('Models, projects, traces and evaluations.', 'Modelos, proyectos, trazas y evaluaciones.'),
+              text: bi('Models, projects, traces and evaluations, with governance built in.', 'Modelos, proyectos, trazas y evaluaciones, con gobierno de serie.'),
             },
           ],
           note: bi(
-            'One sentence per piece. We open each one later, with a demo.\nBackstage is CNCF Incubating, not graduated: someone in the room knows.\nThe repository is the fourth piece: it says what is allowed.',
-            'Una frase por pieza. Abrimos cada una después, con una demo.\nBackstage es CNCF Incubating, no graduado: alguien en la sala lo sabe.\nEl repositorio es la cuarta pieza: dice lo que está permitido.',
+            'The frame of the hour: two pieces are products, one is your judgement written down. Do not sell the gateway and Foundry, they had a session today.\nBackstage is CNCF Incubating, not graduated: someone in the room knows.\nThe repository is the fourth piece: it says what is allowed. That one is also yours.',
+            'El marco de la hora: dos piezas son producto, una es tu criterio por escrito. No vendas el gateway ni Foundry, hoy han tenido su sesión.\nBackstage es CNCF Incubating, no graduado: alguien en la sala lo sabe.\nEl repositorio es la cuarta pieza: dice lo que está permitido. Esa también es tuya.',
           ),
         },
       ],
@@ -613,9 +647,9 @@ export const talk: Talk = {
           layout: 'section',
           number: '04',
           title: bi('AI Gateway', 'AI Gateway'),
-          lead: bi('The only piece that sees who is calling on every request.', 'La única pieza que ve quién llama en cada petición.'),
+          lead: bi('You have seen it inside today. Here, only what the platform has to guarantee.', 'Hoy lo has visto por dentro. Aquí, solo lo que la plataforma tiene que garantizar.'),
           icon: 'apim',
-          note: bi('Second piece. This is where the cost and the limits live.', 'Segunda pieza. Aquí viven el coste y los límites.'),
+          note: bi('Say it: this is not the deep dive from 18:00. Two slides: what the platform guarantees per team, and the policy as the contract. If someone wants the internals, point them to that session.', 'Dilo: esto no es el deep dive de las 18:00. Dos diapositivas: lo que la plataforma garantiza por equipo, y la política como contrato. Si alguien quiere las tripas, remite a esa sesión.'),
         },
         {
           id: 'gateway-map',
@@ -641,7 +675,7 @@ export const talk: Talk = {
           ],
           caption: bi('What it enables: a new team shares capacity and cannot spend without limit.', 'Qué habilita: un equipo nuevo comparte capacidad y no puede gastar sin límite.'),
           note: bi(
-            'Four things happen inside: identify the caller, limit tokens per team (not requests), add the attribution header, reach Foundry with the gateway\'s managed identity.\nExceeding the rate returns 429, exceeding the quota returns 403.\nTeam C holds a key to the model endpoint: it skips everything. Closing that takes Azure Policy to deny direct deployments in spoke projects and a backend restricted to the gateway identity. It is governance, not a gateway feature.\nFor a single team, Foundry quotas are enough: the gateway earns its place when several callers share capacity.',
+            'Ninety seconds, no more: the audience has just had the deep dive.\nFour things happen inside: identify the caller, limit tokens per team (not requests), add the attribution header, reach Foundry with the gateway\'s managed identity. Exceeding the rate returns 429, exceeding the quota returns 403.\nTeam C holds a key to the model endpoint: it skips everything. Closing that takes Azure Policy to deny direct deployments in spoke projects and a backend restricted to the gateway identity. It is governance, not a gateway feature.\nFor a single team, Foundry quotas are enough: the gateway earns its place when several callers share capacity.',
             'Dentro pasan cuatro cosas: identificar al llamante, limitar tokens por equipo (no peticiones), añadir la cabecera de atribución y llegar a Foundry con la identidad gestionada del gateway.\nSuperar la tasa devuelve 429, superar la cuota devuelve 403.\nEl equipo C tiene una clave del endpoint del modelo: se salta todo. Cerrarlo exige Azure Policy para denegar despliegues directos en los proyectos spoke y un backend restringido a la identidad del gateway. Es gobierno, no una función del gateway.\nPara un solo equipo bastan las cuotas de Foundry: el gateway se justifica cuando varios llamantes comparten capacidad.',
           ),
         },
@@ -667,7 +701,7 @@ export const talk: Talk = {
             highlight: [1, 2, 6, 8],
           },
           note: bi(
-            'A 200 token answer and a 30 000 token summary are one request each: any limit in requests limits nothing.\ncounter-key by subscription is what makes attribution possible: one counter per team.\nThe attribution header lets traces in App Insights be joined with the cost report.\nThe gateway reaches the backend with its managed identity, never the caller\'s.\nRe-check the current state of APIM as an AI gateway and of Azure AI Gateway before the talk: this moved in 2026.',
+            'A 200 token answer and a 30 000 token summary are one request each: any limit in requests limits nothing.\ncounter-key by subscription is what makes attribution possible: one counter per team.\nThe attribution header lets traces in App Insights be joined with the cost report.\nThe gateway reaches the backend with its managed identity, never the caller\'s.\nOpen decision, say it if asked: this XML is API Management. Azure AI Gateway is GA since 17 November as its own resource and its policies are JSON. Same idea, one counter per caller. The slide shows the shape, not the file format.',
             'Una respuesta de 200 tokens y un resumen de 30 000 son una petición cada uno: un límite en peticiones no limita nada.\ncounter-key por suscripción es lo que hace posible la atribución: un contador por equipo.\nLa cabecera de atribución permite cruzar las trazas de App Insights con el informe de coste.\nEl gateway llega al backend con su identidad gestionada, nunca la del llamante.\nRevisa el estado actual de APIM como gateway de IA y de Azure AI Gateway antes de la charla: se movió en 2026.',
           ),
         },
@@ -769,26 +803,24 @@ export const talk: Talk = {
           ],
           fallback: bi('If it fails: say what it would have done and move to demo 2.', 'Si falla: di lo que habría hecho y pasa a la demo 2.'),
           note: bi(
-            'Open every tab before the session. Do not do first-time logins on stage.\nTODO: confirm what is deployed in the lab (Backstage, APIM, Foundry). If Backstage runs only locally, say so. Whatever does not exist is a recording, and the slide says it.\nDemo 1 talks to GitHub and Azure: it is the one that can fail. Never run terraform apply on stage.\nWhat the template does not let you decide: the model comes from the catalog, the dataset is already there, the check is already required.',
+            'Open every tab before the session and run the template once ten minutes before: a cold Backstage is slow. Do not do first-time logins on stage.\nSay what is real and what is not: this demo touches Backstage, GitHub and Azure, and it is the one that can fail. What does not exist is a recording, and the slide says it.\nNever run terraform apply on stage.\nThe order of the stops is the argument: the repo appears with the check already required, the team appears in the gateway with its counter, and the catalog already knows who owns it.',
             'Abre todas las pestañas antes de la sesión. No hagas el primer login en el escenario.\nPENDIENTE: confirma qué hay desplegado en el laboratorio (Backstage, APIM, Foundry). Si Backstage solo corre en local, dilo. Lo que no exista es una grabación, y la diapositiva lo dice.\nLa demo 1 habla con GitHub y Azure: es la que puede fallar. Nunca ejecutes terraform apply en el escenario.\nLo que la plantilla no te deja decidir: el modelo sale del catálogo, el dataset ya está y el check ya es requerido.',
           ),
         },
         {
           id: 'demo-2',
           layout: 'demo',
-          title: bi('Demo 2: the same call, with and without quota', 'Demo 2: la misma llamada, con y sin cuota'),
-          lead: bi('Everything goes through the gateway. Then we try to skip it.', 'Todo pasa por el gateway. Luego intentamos saltárnoslo.'),
+          title: bi('Demo 2: the counter the form left behind', 'Demo 2: el contador que dejó el formulario'),
+          lead: bi('Two teams, two keys, one model. Nobody opened a ticket.', 'Dos equipos, dos claves, un modelo. Nadie abrió un ticket.'),
           stops: [
-            { where: 'Terminal', text: bi('Call the gateway with the team key: 200', 'Llamar al gateway con la clave del equipo: 200') },
-            { where: 'Terminal', text: bi('Read x-remaining-tokens and x-tokens-consumed', 'Leer x-remaining-tokens y x-tokens-consumed') },
-            { where: 'Terminal', text: bi('Go over the quota: 429 with Retry-After', 'Pasarse de la cuota: 429 con Retry-After') },
-            { where: 'Terminal', text: bi('Call the Foundry endpoint directly: it fails', 'Llamar directo al endpoint de Foundry: falla') },
-            { where: 'Azure', text: bi('App Insights: the call, with the team that made it', 'App Insights: la llamada, con el equipo que la hizo') },
+            { where: 'Terminal', text: bi('Call with the key the template just created: 200 and x-remaining-tokens', 'Llamar con la clave que acaba de crear la plantilla: 200 y x-remaining-tokens') },
+            { where: 'Terminal', text: bi('The same key over the limit: 429, Retry-After, and the other team is unaffected', 'La misma clave por encima del límite: 429, Retry-After, y el otro equipo no se entera') },
+            { where: 'Azure', text: bi('Monitoring: calls and estimated cost per key', 'Monitoring: llamadas y coste estimado por clave') },
           ],
-          fallback: bi('If the lab is down: show the policy slide and say what each header would return.', 'Si el laboratorio cae: enseña la diapositiva de la política y di qué devolvería cada cabecera.'),
+          fallback: bi('If the gateway does not answer: the policy slide, and one sentence. The form already gave the team its counter.', 'Si el gateway no responde: la diapositiva de la política y una frase. El formulario ya le dio al equipo su contador.'),
           note: bi(
-            'TODO: this demo needs APIM and a Foundry deployment really running in the lab. Confirm before the talk (open question in SCRIPT.md).\nThe headers x-remaining-tokens, x-tokens-consumed and Retry-After come from the policy in platform/policies/llm-token-limit.xml.\nThe direct call fails because the Foundry resource has public network access disabled and local keys disabled (foundry.tf). That is what closes the bypass; the gateway alone does not.\nDo not promise an exact error text: read it from the screen.',
-            'PENDIENTE: esta demo necesita APIM y un despliegue de Foundry funcionando de verdad en el laboratorio. Confírmalo antes de la charla (pregunta abierta en SCRIPT.md).\nLas cabeceras x-remaining-tokens, x-tokens-consumed y Retry-After salen de la política de platform/policies/llm-token-limit.xml.\nLa llamada directa falla porque el recurso de Foundry tiene el acceso de red público y las claves locales desactivados (foundry.tf). Eso es lo que cierra el bypass; el gateway solo no.\nNo prometas el texto exacto del error: léelo de la pantalla.',
+            'Ninety seconds, no more: the internals were at 18:00. Here the point is that the form already left the team its counter and its name in the telemetry.\nRead the two headers out loud. They are the whole argument.\nIf we are behind, this is the first demo that goes.\nIt needs a real gateway and a real deployment: the open question in SCRIPT.md. Without them it is a recording.',
+            'Noventa segundos, ni uno más: las tripas fueron a las 18:00. Aquí lo importante es que el formulario ya dejó al equipo su contador y su nombre en la telemetría.\nLee en voz alta las dos cabeceras. Son todo el argumento.\nSi vamos tarde, esta es la primera demo que se cae.\nNecesita un gateway y un despliegue de verdad: la pregunta abierta de SCRIPT.md. Sin ellos es una grabación.',
           ),
         },
         {
@@ -828,9 +860,11 @@ export const talk: Talk = {
               'invented_owners            3   <= 0      FAIL',
               'c03  invented owner: Carlos Mendoza',
               'c07  invented owner: Patricia Gil',
-              'GATE: FAIL: decisions_recall, invented_owners',
+              'c17  invented owner: Álvaro Sanz',
+              'GATE: FAIL',
+              '2 metric(s) below threshold: decisions_recall, invented_owners',
             ],
-            highlight: [2, 4, 7],
+            highlight: [2, 4, 8],
           },
           note: bi(
             'Real output from the demo/gate-fails branch. The fixtures are synthetic (the repo was built without an Azure subscription): they prove the gate works, not that a model works. Say so.\nNext: the demo, in the browser.',
@@ -948,7 +982,7 @@ export const talk: Talk = {
           code: {
             title: bi('main, with the fixtures edited · exit 0', 'main, con los fixtures editados · exit 0'),
             lines: [
-              '$ sed -i \'s/"due"/"deadline"/\' evals/fixtures/*.json',
+              '$ sed -i \'s/\\"due\\"/\\"deadline\\"/g\' evals/fixtures/*.json',
               '$ make demo',
               'schema_valid           1.000   >= 1.00   PASS',
               'decisions_recall       0.925   >= 0.80   PASS',
@@ -959,8 +993,8 @@ export const talk: Talk = {
             highlight: [0, 2, 6],
           },
           note: bi(
-            'A real run: in a copy of the repo, "due" was renamed to "deadline" in every recorded response. The gate stays green.\nWhy: schema_valid checks that the required fields are there and well formed. due is optional, so a missing one is valid. It checks shape, not meaning.\nDetecting this needs a consumer contract test: a different file and a different conversation.\nAlso say: decisions_recall is fuzzy matching, and the fixtures in the repo are synthetic. Your gate is exactly as good as your dataset.',
-            'Una ejecución real: en una copia del repo se renombró "due" a "deadline" en todas las respuestas grabadas. El gate sigue en verde.\nPor qué: schema_valid comprueba que los campos obligatorios estén y estén bien formados. due es opcional, así que si falta es válido. Comprueba forma, no significado.\nDetectarlo exige un test de contrato del consumidor: otro fichero y otra conversación.\nAñade: decisions_recall es coincidencia aproximada y los fixtures del repo son sintéticos. Tu gate es tan bueno como tu dataset.',
+            'A real run: in a copy of the repo, "due" was renamed to "deadline" in every recorded response. The gate stays green.\nThe escaped quotes are not cosmetic: without them sed matches nothing, the field keeps its name, and the green means nothing. Count the substitutions before you trust the run.\nWhy the gate does not notice: schema_valid checks that the required fields are there and well formed. due is optional, so a missing one is valid. It checks shape, not meaning.\nDetecting this needs a consumer contract test: a different file and a different conversation.\nAlso say: decisions_recall is fuzzy matching, and the fixtures in the repo are synthetic. Your gate is exactly as good as your dataset.',
+            'Una ejecución real: en una copia del repo se renombró "due" a "deadline" en todas las respuestas grabadas. El gate sigue en verde.\nLas comillas escapadas no son cosméticas: sin ellas sed no sustituye nada, el campo conserva su nombre y el verde no significa nada. Cuenta las sustituciones antes de fiarte del run.\nPor qué el gate no se entera: schema_valid comprueba que los campos obligatorios estén y estén bien formados. due es opcional, así que si falta es válido. Comprueba forma, no significado.\nDetectarlo exige un test de contrato del consumidor: otro fichero y otra conversación.\nAñade: decisions_recall es coincidencia aproximada y los fixtures del repo son sintéticos. Tu gate es tan bueno como tu dataset.',
           ),
         },
         {
