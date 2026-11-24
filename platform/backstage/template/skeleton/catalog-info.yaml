@@ -4,13 +4,13 @@ metadata:
   name: ${{ values.name }}
   description: AI agent generated from the platform golden path
   annotations:
-    github.com/project-slug: acme/${{ values.name }}
+    github.com/project-slug: Kerman-Sanjuan/${{ values.name }}
   tags:
     - ai
     - ai-agent
   links:
     - title: Evaluation thresholds
-      url: https://github.com/acme/${{ values.name }}/blob/main/evals/thresholds.yaml
+      url: https://github.com/Kerman-Sanjuan/${{ values.name }}/blob/main/evals/thresholds.yaml
 spec:
   type: ai-agent
   lifecycle: experimental
@@ -18,21 +18,14 @@ spec:
   system: ai-platform
   # The catalog answers the only question that matters at scale: who do I call,
   # and what does this thing depend on. Both come from this file, not from a dashboard.
+  #
+  # `resource:default/gpt-4o-mini`, not `resource:ai-platform/...`: an entity reference is
+  # kind:namespace/name, and the namespace is `default`. Writing the system where the
+  # namespace goes creates a relation to an entity that does not exist, and the catalog
+  # says so on the entity page.
+  #
+  # The model Resource is declared once, in the platform catalog. This file does not
+  # declare it: a second copy collides with the first, and two locations for one entity is
+  # not a catalogue, it is two.
   dependsOn:
-    - resource:ai-platform/${{ values.model }}
-
----
-# One resource per approved model, owned by the platform team. Teams depend on it; they
-# do not own it. This is how "which applications use this model" gets an answer without
-# asking anybody.
-apiVersion: backstage.io/v1alpha1
-kind: Resource
-metadata:
-  name: ${{ values.model }}
-  description: Approved model deployment, quota enforced by the gateway
-  tags:
-    - ai-model
-spec:
-  type: ai-model
-  owner: platform-team
-  system: ai-platform
+    - resource:default/${{ values.model }}
