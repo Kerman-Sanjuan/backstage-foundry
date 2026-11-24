@@ -1,13 +1,14 @@
 name: evals
 
 # The required check. Its job name must match `requiredStatusCheckContexts` in the
-# platform template, otherwise the branch protection protects nothing.
+# platform template, otherwise branch protection protects nothing.
+#
+# It runs on every pull request on purpose. A required check that only runs on some paths
+# leaves every other pull request stuck on "Expected" forever: the step below decides
+# whether there is anything to measure and reports success when there is not.
 
 on:
   pull_request:
-    paths:
-      - "agent/**"
-      - "evals/**"
   workflow_dispatch:
 
 permissions:
@@ -21,9 +22,44 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The scope step diffs against the base branch, so it needs the history.
+          fetch-depth: 0
+
+      - name: Does this pull request touch the agent or the evals?
+        id: scope
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "run=true" >>"$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git fetch --no-tags origin "${{ github.base_ref }}"
+          changed="$(git diff --name-only "origin/${{ github.base_ref }}...HEAD")"
+          printf '%s\n' "$changed"
+          if printf '%s\n' "$changed" | grep -Eq '^(agent|evals)/'; then
+            echo "run=true" >>"$GITHUB_OUTPUT"
+          else
+            echo "run=false" >>"$GITHUB_OUTPUT"
+            {
+              echo "## Evaluation gate: not applicable"
+              echo
+              echo "This pull request does not touch \`agent/\` or \`evals/\`, so there is"
+              echo "nothing for the gate to measure. It reports success on purpose: it is a"
+              echo "required check, and a required check that never reports blocks every"
+              echo "other pull request."
+            } >>"$GITHUB_STEP_SUMMARY"
+          fi
+
       - uses: actions/setup-python@v7
+        if: steps.scope.outputs.run == 'true'
         with:
           python-version: "3.12"
-      - run: pip install -r evals/requirements.txt
+
+      - name: Install
+        if: steps.scope.outputs.run == 'true'
+        run: pip install -r evals/requirements.txt
+
       - name: Gate
+        if: steps.scope.outputs.run == 'true'
         run: python -m evals.run
