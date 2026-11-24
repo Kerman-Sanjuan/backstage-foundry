@@ -1,0 +1,107 @@
+name: demo azure
+
+# One button up, one button down. Nothing here runs on a push: the only way to create
+# or delete the demo infrastructure is a human dispatching this workflow.
+#
+# Why a lifecycle and not a deploy: the demo needs a Foundry account, a gateway and
+# two keys for a week. Leaving them up costs money for no reason, and the failure this
+# design removes is exactly that: forgetting to tear it down. The keys also carry an
+# expiry, so even a forgotten teardown stops working on its own.
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "up creates everything, down deletes the resource group, status only reads"
+        type: choice
+        options: [up, down, status]
+        default: status
+      confirm:
+        description: "For down: type the resource group name exactly. Ignored for up and status"
+        type: string
+        default: ""
+      suffix:
+        description: "Suffix for every resource name. Keep it the same between up and down"
+        type: string
+        default: k3rman
+      region:
+        description: "Azure region. The gateway is not in Spain Central; westeurope or francecentral"
+        type: string
+        default: westeurope
+      model:
+        description: "Model to deploy in Foundry"
+        type: string
+        default: gpt-4o-mini
+      tpm_capacity:
+        description: "Foundry capacity in thousands of tokens per minute. 1 is the smallest ceiling"
+        type: string
+        default: "1"
+      ip_allow:
+        description: "Optional: your public CIDR, e.g. 88.0.0.0/24. Empty means no IP filter"
+        type: string
+        default: ""
+      alert_email:
+        description: "Optional: email for the monthly budget alert"
+        type: string
+        default: ""
+      ttl_days:
+        description: "Days until the gateway keys expire on their own"
+        type: string
+        default: "7"
+
+# No stored credentials: the runner federates into Azure with OIDC.
+permissions:
+  contents: read
+  id-token: write
+
+# Two dispatches in parallel would fight over the same names. One at a time.
+concurrency:
+  group: demo-azure
+  cancel-in-progress: false
+
+env:
+  SUFFIX: ${{ inputs.suffix }}
+  REGION: ${{ inputs.region }}
+  MODEL: ${{ inputs.model }}
+  TPM_CAPACITY: ${{ inputs.tpm_capacity }}
+  IP_ALLOW: ${{ inputs.ip_allow }}
+  ALERT_EMAIL: ${{ inputs.alert_email }}
+  TTL_DAYS: ${{ inputs.ttl_days }}
+  RG: rg-aigw-demo-${{ inputs.suffix }}
+
+jobs:
+  lifecycle:
+    name: ${{ inputs.action }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment: foundry
+    steps:
+      - uses: actions/checkout@v7
+
+      # A destroy has to be typed, not clicked by accident. The group name is the
+      # confirmation because it is the only value that tells you what you are deleting.
+      - name: Confirm the destroy
+        if: inputs.action == 'down'
+        run: |
+          set -euo pipefail
+          if [ "${{ inputs.confirm }}" != "$RG" ]; then
+            echo "Refusing to delete: type the resource group name ($RG) in confirm." >&2
+            exit 1
+          fi
+          echo "About to delete $RG in subscription ${{ vars.AZURE_SUBSCRIPTION_ID }}"
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Install the AI Gateway CLI extension
+        if: inputs.action != 'down'
+        run: |
+          set -euo pipefail
+          curl -fsSL https://aka.ms/aigateway-cli-install | bash
+          az aig version
+
+      - name: Run ${{ inputs.action }}
+        run: bash "infra/azure/${{ inputs.action }}.sh"

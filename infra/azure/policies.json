@@ -1,0 +1,24 @@
+[
+  {
+    "type": "tokenLimit",
+    "scope": "workspace",
+    "count": 20000,
+    "period": "minute",
+    "counterKey": ["identity"]
+  },
+  {
+    "type": "requestRateLimit",
+    "scope": "workspace",
+    "callsPerPeriod": 9000,
+    "periodSeconds": 2592000,
+    "counterKey": []
+  },
+  {
+    "type": "costLimit",
+    "id": "demo-monthly-spend",
+    "scope": "workspace",
+    "amount": 5,
+    "period": "month",
+    "counterKey": []
+  }
+]
